@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usage Monitor — Claude / Codex 利用量モニター for Windows</title>
+<meta name="description" content="Claude Code / Codex (ChatGPT) の利用量を Windows タスクトレイに常駐表示。ログイン不要・完全オンデバイス。">
+<style>
+  :root{
+    --bg:#f5f5f7; --card:#ffffff; --fg:#1c1c27; --dim:#6c6f85; --line:#e0e0e6;
+    --blue:#1e66f5; --peach:#fe640b; --green:#40a02b; --yellow:#df8e1d; --red:#d20f39;
+    --accent:var(--blue);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#181825; --card:#1e1e2e; --fg:#cdd6f4; --dim:#9399b2; --line:#313244;
+      --blue:#89b4fa; --peach:#fab387; --green:#a6e3a1; --yellow:#f9e2af; --red:#f38ba8;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Yu Gothic UI","Segoe UI",system-ui,-apple-system,sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+  .hero{text-align:center;padding:72px 20px 48px}
+  .logo{width:88px;height:88px;margin:0 auto 20px;display:block}
+  h1{font-size:2.6rem;margin:0 0 10px;letter-spacing:-.02em}
+  .tag{font-size:1.2rem;color:var(--dim);margin:0 auto 8px;max-width:620px}
+  .sub{font-size:.95rem;color:var(--dim);margin-bottom:30px}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);
+    color:#fff;font-size:1.1rem;font-weight:600;padding:15px 30px;border-radius:12px;
+    box-shadow:0 6px 20px rgba(30,102,245,.25);transition:transform .12s,box-shadow .12s}
+  .btn:hover{transform:translateY(-2px);text-decoration:none;box-shadow:0 10px 28px rgba(30,102,245,.3)}
+  .btn small{font-weight:400;opacity:.85;font-size:.8rem}
+  .meta{margin-top:14px;font-size:.85rem;color:var(--dim)}
+  section{padding:36px 0;border-top:1px solid var(--line)}
+  h2{font-size:1.5rem;margin:0 0 20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px}
+  .card p{margin:0;color:var(--dim);font-size:.92rem}
+  .ico{font-size:1.3rem}
+  .shot{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px;margin:8px 0}
+  .row{display:flex;align-items:center;gap:12px;margin:10px 0;font-size:.9rem}
+  .row .name{width:120px;color:var(--dim)}
+  .bar{flex:1;height:16px;background:var(--line);border-radius:8px;overflow:hidden;position:relative}
+  .bar>span{display:block;height:100%;border-radius:8px}
+  .pct{width:52px;text-align:right;font-variant-numeric:tabular-nums}
+  .prov{font-weight:600;margin:14px 0 4px}
+  ol.steps{padding-left:1.2em}
+  ol.steps li{margin:8px 0}
+  code{background:var(--line);padding:2px 7px;border-radius:6px;font-size:.88em;
+    font-family:"Cascadia Code",Consolas,monospace}
+  .note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--yellow);
+    border-radius:8px;padding:12px 16px;font-size:.9rem;color:var(--dim);margin-top:16px}
+  footer{text-align:center;color:var(--dim);font-size:.85rem;padding:40px 20px 60px;
+    border-top:1px solid var(--line)}
+  .osnote{font-size:.8rem;color:var(--dim);margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="hero">
+    <svg class="logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="6" y="2" width="22" height="60" rx="6" fill="none" stroke="var(--dim)" stroke-width="3"/>
+      <rect x="9" y="30" width="16" height="29" rx="3" fill="var(--green)"/>
+      <rect x="36" y="2" width="22" height="60" rx="6" fill="none" stroke="var(--dim)" stroke-width="3"/>
+      <rect x="39" y="14" width="16" height="45" rx="3" fill="var(--peach)"/>
+    </svg>
+    <h1>Usage Monitor</h1>
+    <p class="tag">Claude Code / Codex (ChatGPT) の利用量を<br>Windows タスクトレイに常駐表示</p>
+    <p class="sub">macOS の CodexBar の Windows 版。ログイン不要・完全オンデバイス。</p>
+    <a class="btn" href="https://github.com/nakasiwork0210-tech/ai_usage_monitor/releases/latest/download/UsageMonitor.exe">
+      <span class="ico">⬇</span> Windows 版をダウンロード <small>UsageMonitor.exe</small>
+    </a>
+    <div class="meta">
+      無料・オープンソース (MIT) ・ Python 不要 ・
+      <a href="https://github.com/nakasiwork0210-tech/ai_usage_monitor">ソースコード</a>
+    </div>
+    <div class="osnote">Windows 10 / 11 対応 ・ 約 25 MB</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <h2>できること</h2>
+    <div class="grid">
+      <div class="card"><h3><span class="ico">📊</span>トレイに使用率</h3><p>Claude / Codex の使用率をバーで常時表示。緑・黄・赤で残量がひと目でわかる。</p></div>
+      <div class="card"><h3><span class="ico">⏱</span>リセットまで表示</h3><p>5時間・週の各枠が何時にリセットされるか、残り時間をカウントダウン。</p></div>
+      <div class="card"><h3><span class="ico">📈</span>コストダッシュボード</h3><p>ローカルログから日次コストを集計。Today / 7日 / 30日で切り替え。</p></div>
+      <div class="card"><h3><span class="ico">🌗</span>ダーク / ライト</h3><p>Windows の外観設定に自動追従。手動固定も可能。</p></div>
+      <div class="card"><h3><span class="ico">🔔</span>使いすぎ通知</h3><p>使用率が 90% を超えると Windows 通知でお知らせ。</p></div>
+      <div class="card"><h3><span class="ico">🔒</span>安全設計</h3><p>独自ログインなし・パスワード保存なし・クラウド同期なし。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>イメージ</h2>
+    <div class="shot">
+      <div class="prov" style="color:var(--blue)">Claude <span style="color:var(--dim);font-weight:400;font-size:.85rem">(Pro)</span></div>
+      <div class="row"><span class="name">5時間</span><span class="bar"><span style="width:45%;background:var(--green)"></span></span><span class="pct">45%</span></div>
+      <div class="row"><span class="name">週</span><span class="bar"><span style="width:26%;background:var(--green)"></span></span><span class="pct">26%</span></div>
+      <div class="prov" style="color:var(--peach)">Codex <span style="color:var(--dim);font-weight:400;font-size:.85rem">(Plus)</span></div>
+      <div class="row"><span class="name">週</span><span class="bar"><span style="width:45%;background:var(--green)"></span></span><span class="pct">45%</span></div>
+      <div class="row"><span class="name">コードレビュー</span><span class="bar"><span style="width:12%;background:var(--green)"></span></span><span class="pct">12%</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+    <ol class="steps">
+      <li><a href="https://github.com/nakasiwork0210-tech/ai_usage_monitor/releases/latest/download/UsageMonitor.exe">UsageMonitor.exe</a> をダウンロードして実行(Python 不要)</li>
+      <li>タスクトレイに常駐 — <b>左クリック</b>でダッシュボード、<b>右クリック</b>でメニュー</li>
+      <li>Claude Code / Codex CLI でログイン済みなら、そのまま利用量が表示されます</li>
+    </ol>
+    <div class="note">
+      署名なしの exe のため、初回起動時に Windows SmartScreen が警告することがあります。
+      その場合は <b>[詳細情報] → [実行]</b> で起動できます。中身が気になる場合は
+      <a href="https://github.com/nakasiwork0210-tech/ai_usage_monitor#開発モードでの起動-python-から直接">ソースからビルド</a>してください。
+    </div>
+  </section>
+
+  <section>
+    <h2>セキュリティ</h2>
+    <div class="grid">
+      <div class="card"><h3>ローカルデータのみ</h3><p>Claude / Codex CLI が保存済みの認証情報を読むだけ。独自のログイン画面はありません。</p></div>
+      <div class="card"><h3>パスワード保存なし</h3><p>トークンを別の場所へコピーしません。更新時も各 CLI の元ファイルに書き戻すだけ。</p></div>
+      <div class="card"><h3>クラウド同期なし</h3><p>テレメトリや外部サーバーへの送信は一切ありません。</p></div>
+      <div class="card"><h3>公式 API のみ</h3><p>通信は利用量取得のための OpenAI / Anthropic 公式エンドポイントへの HTTPS のみ。コスト集計は完全オフライン。</p></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <a href="https://github.com/nakasiwork0210-tech/ai_usage_monitor">GitHub</a> ・
+  MIT License ・
+  <a href="https://github.com/nakasiwork0210-tech/ai_usage_monitor/releases">すべてのリリース</a>
+  <p style="margin-top:10px">macOS の <a href="https://github.com/steipete/CodexBar">CodexBar</a> にインスパイアされた非公式ツールです。</p>
+</footer>
+
+</body>
+</html>
