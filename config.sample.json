@@ -1,0 +1,7 @@
+{
+  "refresh_minutes": 5,
+  "notify_threshold": 90,
+  "icon_mode": "both",
+  "icon_percent": false,
+  "theme": "auto"
+}

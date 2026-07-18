@@ -1,0 +1,21 @@
+# ローカル利用データ・キャッシュ(個人のパスやトークン数を含むため公開しない)
+cost_cache.json
+config.json
+*.log
+
+# ビルド成果物
+dist/
+build/
+*.spec
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Claude Code / エディタのローカル設定
+.claude/
+.vscode/
+.idea/
