@@ -3,6 +3,12 @@
 Claude Code / Codex (ChatGPT) の利用量をタスクトレイに常駐表示する Windows 用アプリ。
 macOS の [CodexBar](https://github.com/steipete/CodexBar) と同じ仕組みで、ローカルの CLI 認証情報を使って公式エンドポイントから利用量を取得します。
 
+## ダウンロード
+
+[**Releases**](https://github.com/nakasiwork0210-tech/ai_usage_monitor/releases/latest) から `UsageMonitor.exe` をダウンロードして実行するだけ(Python 不要)。
+
+> 署名なしの exe のため、初回起動時に Windows SmartScreen が「WindowsによってPCが保護されました」と警告することがあります。その場合は **[詳細情報] → [実行]** で起動できます。気になる場合はソースからビルドしてください(下記)。
+
 ## 機能
 
 - **トレイアイコン** — 使用率バー(緑 <70% / 黄 <90% / 赤 ≥90%、エラー時 ✕)。表示モードを切り替え可能:
