@@ -97,6 +97,15 @@ python usage_monitor.py --cost 30  # ローカルコスト集計 (直近30日)
 - `localcost.py` — ローカルセッションログの増分コストスキャン
 - `dashboard.py` — ダッシュボードウィンドウ(tkinter、テーマ対応)
 - `usage_monitor.log` — ログ / `cost_cache.json` — スキャンキャッシュ
+- `web/` — ダウンロードサイトのソース(Vite + React + TypeScript + Tailwind)。`docs/` はそのビルド成果物(GitHub Pages が配信)
+
+### サイトのビルド
+
+```bash
+cd web
+npm install
+npm run build   # → ../docs に出力
+```
 
 ## メモ
 
