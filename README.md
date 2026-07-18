@@ -5,7 +5,7 @@ macOS の [CodexBar](https://github.com/steipete/CodexBar) と同じ仕組みで
 
 ## ダウンロード
 
-[**Releases**](https://github.com/nakasiwork0210-tech/ai_usage_monitor/releases/latest) から `UsageMonitor.exe` をダウンロードして実行するだけ(Python 不要)。
+**[📥 ダウンロードサイト](https://nakasiwork0210-tech.github.io/ai_usage_monitor/)** から、または [Releases](https://github.com/nakasiwork0210-tech/ai_usage_monitor/releases/latest) から `UsageMonitor.exe` をダウンロードして実行するだけ(Python 不要)。
 
 > 署名なしの exe のため、初回起動時に Windows SmartScreen が「WindowsによってPCが保護されました」と警告することがあります。その場合は **[詳細情報] → [実行]** で起動できます。気になる場合はソースからビルドしてください(下記)。
 
