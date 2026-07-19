@@ -151,6 +151,35 @@ npm install
 npm run build   # → ../docs に出力
 ```
 
+## コード署名 (SmartScreen 警告を消す)
+
+未署名の exe は初回起動時に SmartScreen 警告が出ます。これを消すには**認証局(CA)が発行したコード署名証明書**で署名する必要があります(自己署名では他人の PC の警告は消えません)。
+
+署名スクリプト [`sign.ps1`](sign.ps1) を用意しています:
+
+```powershell
+# 証明書 (.pfx) で署名
+powershell -File sign.ps1 -PfxPath cert.pfx -PfxPassword "***"
+
+# 証明書ストアの拇印で署名 (HSM / トークン)
+powershell -File sign.ps1 -Thumbprint <THUMBPRINT>
+
+# パイプライン確認用の自己署名 (★配布には使えない)
+powershell -File sign.ps1 -SelfSignedTest
+```
+
+RFC3161 タイムスタンプを自動付与するので、証明書失効後も署名は有効なままです。
+
+### 証明書の入手方法(いずれか)
+
+| 方法 | 費用 | SmartScreen | 備考 |
+|---|---|---|---|
+| **[SignPath Foundation](https://signpath.org/)** | 無料 | OV(評価が貯まると消える) | OSS 向け無料コード署名。このリポジトリは対象。GitHub Actions 連携 |
+| **[Azure Trusted Signing](https://learn.microsoft.com/azure/trusted-signing/)** | 約 $10/月 | 良好 | Microsoft 運営。本人/組織確認が必要。最も手軽な有料 |
+| OV / EV 証明書購入 | $200〜600/年 | EV は即時 | DigiCert / Sectigo など。ハードウェアトークン必須 |
+
+無料で済ませたい & オープンソースなので、**SignPath Foundation** の申請が第一候補です。
+
 ## メモ
 
 - コストは公開 API 料金からの**推定値**です(サブスクリプション利用分は実際には課金されません)。Codex のコストは gpt-5 の API 料金換算の参考値です。
