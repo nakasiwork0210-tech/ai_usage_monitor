@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Usage Monitor — Claude Code / Codex (ChatGPT) の利用量を Windows タスクトレイに表示する常駐アプリ。
-macOS の CodexBar と同様に、ローカルの CLI 認証情報を使って公式エンドポイントから取得する。
+
+各 CLI がローカルに保存している OAuth 認証情報 (~/.claude/.credentials.json,
+~/.codex/auth.json) をそのまま利用し、各サービスの公式利用量エンドポイントを
+呼び出して残量を取得する。追加のログインやトークンのコピーは行わない。
 
 使い方:
   pythonw usage_monitor.py          トレイ常駐

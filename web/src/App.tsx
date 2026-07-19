@@ -180,7 +180,7 @@ export default function App() {
         <Section className="!pt-20 text-center">
           <motion.div initial="hidden" animate="show" variants={fadeUp} transition={{ duration: 0.5 }}>
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white/60 px-4 py-1.5 text-xs text-neutral-500 dark:border-neutral-700 dark:bg-neutral-800/50 dark:text-neutral-400">
-              <span className="h-2 w-2 rounded-full bg-good" /> macOS の CodexBar の Windows 版
+              <span className="h-2 w-2 rounded-full bg-good" /> Windows 常駐 · Claude &amp; Codex 対応 · オープンソース
             </div>
             <h1 className="mx-auto max-w-3xl bg-gradient-to-br from-brand to-brand-2 bg-clip-text text-4xl font-bold leading-tight tracking-tight text-transparent sm:text-6xl">
               Claude / Codex の利用量を<br />タスクトレイで見張る
@@ -379,7 +379,7 @@ export default function App() {
           <a href={`${REPO}/blob/main/LICENSE`} className="hover:text-brand">MIT License</a>
         </div>
         <p className="mt-3">
-          macOS の <a href="https://github.com/steipete/CodexBar" className="hover:text-brand">CodexBar</a> にインスパイアされた非公式ツールです。
+          Anthropic / OpenAI とは無関係の非公式・個人開発ツールです。
         </p>
       </footer>
     </div>

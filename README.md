@@ -1,7 +1,7 @@
 # Usage Monitor (Windows)
 
 Claude Code / Codex (ChatGPT) の利用量をタスクトレイに常駐表示する Windows 用アプリ。
-macOS の [CodexBar](https://github.com/steipete/CodexBar) と同じ仕組みで、ローカルの CLI 認証情報を使って公式エンドポイントから利用量を取得します。
+各 CLI がローカルに保存している認証情報をそのまま使い、各サービスの公式利用量エンドポイントから残量を取得します。追加のログインは不要です。
 
 ## ダウンロード
 
@@ -81,9 +81,9 @@ codex login
 - **アプリ独自のログイン不要** — Claude Code / Codex CLI が保存済みの認証情報を読むだけ
 - **パスワード保存なし** — トークンを独自の場所へコピーしない。リフレッシュ時も各 CLI の元ファイル(`~/.claude/.credentials.json` / `~/.codex/auth.json`)にのみ書き戻す
 - **クラウド同期・テレメトリなし** — 外部への送信は一切なし
-- **通信は公式 API のみ** — 利用量取得のための OpenAI / Anthropic 公式エンドポイントへの HTTPS のみ(CodexBar と同じ方式)。ローカルコスト集計は完全オンデバイスで、ネットワークを使わない
+- **通信は公式 API のみ** — 利用量取得のための OpenAI / Anthropic 公式エンドポイントへの HTTPS のみ。ローカルコスト集計は完全オンデバイスで、ネットワークを使わない
 
-## インストール (brew cask 相当)
+## インストール
 
 Python 不要の単体 exe をインストール:
 
@@ -203,4 +203,9 @@ RFC3161 タイムスタンプを自動付与するので、証明書失効後も
 ## メモ
 
 - コストは公開 API 料金からの**推定値**です(サブスクリプション利用分は実際には課金されません)。Codex のコストは gpt-5 の API 料金換算の参考値です。
-- macOS 版 CodexBar の WidgetKit ウィジェットに相当する機能は Windows には無いため、CLI + ダッシュボードで代替しています。OpenAI / Anthropic の Admin API キーによる組織支出チャートは未実装です(必要なら API キーを config に追加する形で拡張可能)。
+- 利用量データは CLI + ダッシュボード + トレイの3経路で確認できます。OpenAI / Anthropic の Admin API キーによる組織支出チャートは未実装です(必要なら API キーを config に追加する形で拡張可能)。
+- Anthropic / OpenAI とは無関係の非公式ツールです。
+
+## 独立実装について
+
+本アプリは Python + pystray による Windows ネイティブ実装で、他ツールのソースコードは利用していません。利用している利用量エンドポイント(`/api/oauth/usage`、`/backend-api/wham/usage`)や OAuth クライアント ID は、Claude Code / Codex の各公式 CLI 自身が使用している公開のもので、ローカルの認証ファイルや各 CLI のログインフローから確認できます。同種のデスクトップ常駐ツールは各プラットフォームに存在しますが、本実装はそれらとは独立に開発したものです。

@@ -1,4 +1,4 @@
-﻿# Usage Monitor インストーラ (brew cask 相当)
+﻿# Usage Monitor インストーラ
 #   インストール:   powershell -ExecutionPolicy Bypass -File install.ps1
 #   自動起動つき:   powershell -ExecutionPolicy Bypass -File install.ps1 -AutoStart
 #   アンインストール: powershell -ExecutionPolicy Bypass -File install.ps1 -Uninstall
