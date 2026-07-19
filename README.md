@@ -180,6 +180,26 @@ RFC3161 タイムスタンプを自動付与するので、証明書失効後も
 
 無料で済ませたい & オープンソースなので、**SignPath Foundation** の申請が第一候補です。
 
+### SignPath での自動署名(GitHub Actions)
+
+[`.github/workflows/release.yml`](.github/workflows/release.yml) を用意済み。タグ `v*` を push すると **ビルド → SignPath で署名 → リリースに署名済み exe を添付** まで自動で行います。承認後、以下を設定するだけ:
+
+1. **[SignPath Foundation](https://signpath.org/) の OSS プログラムに申請** — このリポジトリ(公開・OSS)を対象として申請し、承認を受ける
+2. SignPath ダッシュボードで GitHub リポジトリを連携し、以下を用意:
+   - **Project slug** = `ai_usage_monitor` / **Artifact configuration slug** = `exe` / **Signing policy slug** = `release-signing`
+     (異なる場合は workflow 内の該当値を書き換え)
+   - **API トークン**を発行
+3. GitHub リポジトリの **Settings → Secrets and variables → Actions** で:
+   - **Variables** に `SIGNPATH_ORGANIZATION_ID`(SignPath の Organization ID)
+   - **Secrets** に `SIGNPATH_API_TOKEN`(発行した API トークン)
+4. リリースを出す:
+   ```bash
+   git tag v1.1.0 && git push origin v1.1.0
+   ```
+   → 署名済み `UsageMonitor.exe` が付いたリリースが自動作成されます。
+
+承認・設定が済むまでは、ローカルで `sign.ps1`(証明書入手後)を使うか、未署名のまま配布できます。
+
 ## メモ
 
 - コストは公開 API 料金からの**推定値**です(サブスクリプション利用分は実際には課金されません)。Codex のコストは gpt-5 の API 料金換算の参考値です。

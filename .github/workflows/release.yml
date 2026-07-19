@@ -1,0 +1,55 @@
+name: Build & Sign Release
+
+# タグ v* を push するとビルド → SignPath で署名 → リリースに署名済み exe を添付。
+#   git tag v1.1.0 && git push origin v1.1.0
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write        # リリース作成/アセット添付に必要
+  id-token: write        # SignPath 認証に必要
+
+jobs:
+  build-sign-release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install pyinstaller pystray pillow
+
+      - name: Build exe
+        run: pyinstaller --onefile --windowed --name UsageMonitor usage_monitor.py
+
+      # SignPath に渡すため、未署名 exe を Actions アーティファクトとしてアップロード
+      - name: Upload unsigned artifact
+        id: unsigned
+        uses: actions/upload-artifact@v4
+        with:
+          name: UsageMonitor-unsigned
+          path: dist/UsageMonitor.exe
+
+      # SignPath で署名(承認後、下の org-id / slug を自分の値に置き換える)
+      - name: Sign with SignPath
+        uses: signpath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ai_usage_monitor
+          signing-policy-slug: release-signing
+          artifact-configuration-slug: exe
+          github-artifact-id: ${{ steps.unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: signed
+
+      - name: Publish release with signed exe
+        uses: softprops/action-gh-release@v2
+        with:
+          files: signed/UsageMonitor.exe
+          generate_release_notes: true
