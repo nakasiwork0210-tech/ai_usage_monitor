@@ -30,7 +30,51 @@ macOS の [CodexBar](https://github.com/steipete/CodexBar) と同じ仕組みで
 | Claude | `~/.claude/.credentials.json` | `GET https://api.anthropic.com/api/oauth/usage` |
 | Codex | `~/.codex/auth.json` | `GET https://chatgpt.com/backend-api/wham/usage` |
 
-認証エラー時はトレイに ⚠ を表示します。`claude /login` / `codex login` で再ログインしてください。
+認証エラー時はトレイに ⚠ を表示します。下記の手順で CLI にログインしてください。
+
+## 前提: CLI にログイン
+
+このアプリは Claude Code / Codex CLI が保存した認証情報を読むだけなので、**各 CLI で一度ログインしておく必要があります**(既にログイン済みなら不要)。どちらか一方だけでも動作します。
+
+### Claude Code CLI
+
+未導入なら Node.js を入れて:
+
+```powershell
+npm install -g @anthropic-ai/claude-code
+```
+
+ログイン:
+
+```powershell
+claude          # 起動。未ログインならログインを促される
+# もしくは起動後、プロンプトで /login と入力
+```
+
+1. `1. Claude account with subscription` を選ぶ(Pro / Max プラン)
+2. ブラウザが開くのでログイン・承認
+3. ブラウザが開かない場合は、表示される URL を開き、ワンタイムコードを入力して認証
+
+→ 認証情報が `~/.claude/.credentials.json` に保存されます。
+
+### Codex CLI
+
+未導入なら:
+
+```powershell
+npm install -g @openai/codex
+```
+
+ログイン:
+
+```powershell
+codex login
+```
+
+ブラウザが開くので、ChatGPT アカウント(Plus / Pro)でサインイン。
+→ 認証情報が `~/.codex/auth.json` に保存されます。
+
+> ログイン後、Usage Monitor は次の自動更新(最大5分)で反映します。すぐ見たい場合はトレイメニューの「今すぐ更新」を押してください。
 
 ## セキュリティ
 

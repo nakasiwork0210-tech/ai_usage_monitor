@@ -15,6 +15,7 @@ import {
   Lock,
   CloudOff,
   Wifi,
+  Terminal,
 } from "lucide-react";
 
 const REPO = "https://github.com/nakasiwork0210-tech/ai_usage_monitor";
@@ -95,6 +96,15 @@ function MockDashboard() {
   );
 }
 
+function Cmd({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-2 flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-2 font-mono text-xs text-neutral-700 dark:border-neutral-700 dark:bg-black/40 dark:text-neutral-200">
+      <span className="select-none text-brand">$</span>
+      <code className="overflow-x-auto whitespace-nowrap">{children}</code>
+    </div>
+  );
+}
+
 function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
   return (
     <section id={id} className={`mx-auto max-w-5xl px-5 py-20 ${className}`}>
@@ -149,6 +159,7 @@ export default function App() {
           </a>
           <div className="flex items-center gap-1 text-sm sm:gap-4">
             <a href="#features" className="hidden px-2 text-neutral-500 hover:text-brand sm:inline dark:text-neutral-400">機能</a>
+            <a href="#login" className="hidden px-2 text-neutral-500 hover:text-brand sm:inline dark:text-neutral-400">ログイン</a>
             <a href="#security" className="hidden px-2 text-neutral-500 hover:text-brand sm:inline dark:text-neutral-400">セキュリティ</a>
             <a href={REPO} className="hidden items-center gap-1 px-2 text-neutral-500 hover:text-brand sm:flex dark:text-neutral-400">
               <Github className="h-4 w-4" /> GitHub
@@ -265,6 +276,54 @@ export default function App() {
           </Reveal>
         </Section>
       </div>
+
+      {/* ログイン方法 */}
+      <Section id="login">
+        <Reveal>
+          <h2 className="mb-2 text-center text-3xl font-bold">
+            <Terminal className="mr-2 inline h-7 w-7 text-brand" />
+            CLI にログインしておく
+          </h2>
+          <p className="mb-12 text-center text-neutral-500 dark:text-neutral-400">
+            アプリは各 CLI が保存した認証情報を読むだけ。どちらか一方だけでも動きます。
+          </p>
+        </Reveal>
+        <div className="grid gap-5 md:grid-cols-2">
+          <Reveal>
+            <div className="h-full rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900/50">
+              <h3 className="mb-1 flex items-center gap-2 font-semibold text-brand">Claude Code CLI</h3>
+              <p className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">未導入なら Node.js を入れてインストール:</p>
+              <Cmd>npm install -g @anthropic-ai/claude-code</Cmd>
+              <p className="mb-1 mt-4 text-sm text-neutral-500 dark:text-neutral-400">起動してログイン:</p>
+              <Cmd>claude</Cmd>
+              <ol className="mt-4 space-y-1.5 pl-5 text-sm text-neutral-600 dark:text-neutral-300" style={{ listStyleType: "decimal" }}>
+                <li>プロンプトで <code className="rounded bg-neutral-200 px-1.5 py-0.5 text-xs dark:bg-neutral-700">/login</code> を実行(未ログインなら自動で表示)</li>
+                <li><b>Claude account with subscription</b>(Pro / Max)を選択</li>
+                <li>ブラウザで承認。開かない場合は表示 URL とワンタイムコードで認証</li>
+              </ol>
+            </div>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <div className="h-full rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900/50">
+              <h3 className="mb-1 flex items-center gap-2 font-semibold text-peach">Codex CLI</h3>
+              <p className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">未導入ならインストール:</p>
+              <Cmd>npm install -g @openai/codex</Cmd>
+              <p className="mb-1 mt-4 text-sm text-neutral-500 dark:text-neutral-400">ログイン:</p>
+              <Cmd>codex login</Cmd>
+              <ol className="mt-4 space-y-1.5 pl-5 text-sm text-neutral-600 dark:text-neutral-300" style={{ listStyleType: "decimal" }}>
+                <li>ブラウザが開く</li>
+                <li>ChatGPT アカウント(Plus / Pro)でサインイン</li>
+                <li>完了すると <code className="rounded bg-neutral-200 px-1.5 py-0.5 text-xs dark:bg-neutral-700">~/.codex/auth.json</code> に保存</li>
+              </ol>
+            </div>
+          </Reveal>
+        </div>
+        <Reveal delay={0.15}>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-sm text-neutral-500 dark:text-neutral-400">
+            ログイン後、Usage Monitor は次の自動更新(最大5分)で反映します。すぐ見たい場合はトレイメニューの「今すぐ更新」を。
+          </p>
+        </Reveal>
+      </Section>
 
       {/* セキュリティ */}
       <Section id="security">
